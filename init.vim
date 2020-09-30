@@ -12,7 +12,7 @@ lua << EOF
 --install pyls
 require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach} 
 --install clang-tools, clangd and make it default
-require'nvim_lsp'.ccls.setup{on_attach=require'completion'.on_attach}
+require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
 EOF
 
 "completion-nvim
@@ -22,8 +22,8 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 0
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+set numberwidth=3
 "vim-colorschemes
 set background=dark
 colorscheme gruvbox
@@ -39,6 +39,7 @@ set noswapfile
 set mouse=a
 set autoindent
 set splitright
+set signcolumn=no
 "maps
 inoremap <C-e> <C-o>$
 inoremap jk <ESC>
@@ -53,5 +54,3 @@ inoremap "; ""<left>
 inoremap '; ''<left>
 nnoremap <C-j> :tabprevious<CR>                                             
 nnoremap <C-k> :tabnext<CR>
-
-

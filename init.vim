@@ -54,3 +54,4 @@ inoremap "; ""<left>
 inoremap '; ''<left>
 nnoremap <C-j> :tabprevious<CR>                                             
 nnoremap <C-k> :tabnext<CR>
+nnoremap <Enter> o<ESC>

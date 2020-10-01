@@ -5,6 +5,7 @@ Plug 'flazz/vim-colorschemes'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 "nvim-lspconfig
@@ -13,12 +14,13 @@ lua << EOF
 require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach} 
 --install clang-tools, clangd and make it default
 require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
+--LspInstall bashls- needs npm
+require'nvim_lsp'.bashls.setup{}
 EOF
 
 "completion-nvim
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-set completeopt=menuone,noinsert,noselect
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>" set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 let g:completion_enable_auto_hover = 0
 let g:completion_enable_auto_signature = 0
@@ -40,6 +42,11 @@ set mouse=a
 set autoindent
 set splitright
 set signcolumn=no
+
+"display file to tmux statusline
+autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+set title
+
 "maps
 inoremap <C-e> <C-o>$
 inoremap jk <ESC>

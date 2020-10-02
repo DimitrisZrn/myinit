@@ -11,7 +11,7 @@ call plug#end()
 "nvim-lspconfig
 lua << EOF
 --install pyls
-require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach} 
+require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
 --install clang-tools, clangd and make it default
 require'nvim_lsp'.clangd.setup{on_attach=require'completion'.on_attach}
 --LspInstall bashls- needs npm
@@ -29,7 +29,6 @@ set numberwidth=3
 "vim-colorschemes
 set background=dark
 colorscheme gruvbox
-
 "basic
 syntax on
 set number
@@ -43,12 +42,17 @@ set autoindent
 set splitright
 set signcolumn=no
 
-"display file to tmux statusline
-autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
-set title
-
 "maps
+"dd actually deletes
+nnoremap d "_d
+vnoremap d "_d
+"<leader>dd cuts
+nnoremap <leader>d ""d
+vnoremap <leader>d ""d
+nnoremap - $
+vnoremap - $
 inoremap <C-e> <C-o>$
+inoremap <C-s> <C-o>0
 inoremap jk <ESC>
 noremap Y y$
 inoremap (; ()<left>
@@ -81,5 +85,4 @@ function! ToggleHidden()
     endif
 endfunction
 call ToggleHidden()
-nnoremap <C-s> :call ToggleHidden()<CR>
 

@@ -1,53 +1,21 @@
 call plug#begin('~/.config/nvim/bundle')
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'flazz/vim-colorschemes'
+Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-surround'
-Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
-"nvim-lspconfig
-lua << EOF
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, {
-		underline = true,
-		virtual_text = false,
-		signs = false,
-		update_in_insert = false,
-	} 
-) 
---on_attach extended function
-local on_attach = function(client)
-require'completion'.on_attach(client)
-end
---install pyls
-require'lspconfig'.pyls.setup({on_attach=on_attach})
---install clang-tools, clangd and make it default
-require'lspconfig'.clangd.setup({on_attach=on_attach})
---LspInstall bashls- needs npm
-require'lspconfig'.bashls.setup{}
-EOF
-
-
-"completion-nvim
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-set completeopt=menuone,noinsert,noselect
+set nocompatible
+filetype plugin indent on
+syntax enable
 set shortmess+=c
-let g:completion_enable_auto_hover = 0
-let g:completion_enable_auto_signature = 0
-let g:completion_sorting = 'alphabet'
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
-set numberwidth=3
-autocmd BufEnter * lua require'completion'.on_attach()
-
-"vim-colorschemes
+set nobackup
+set nowritebackup
+set updatetime=300
+set number
+set signcolumn=no
 set background=dark
-colorscheme molokai
-"basic
-syntax on
 set number
 set smarttab
 set shiftwidth=4
@@ -57,15 +25,8 @@ set noswapfile
 set mouse=a
 set autoindent
 set splitright
-set signcolumn=no
+colorscheme molokai
 
-"maps
-"dd actually deletes
-nnoremap d "_d
-vnoremap d "_d
-"<leader>dd cuts
-nnoremap <leader>d ""d
-vnoremap <leader>d ""d
 nnoremap - $
 vnoremap - $
 inoremap <C-e> <C-o>$
@@ -84,22 +45,13 @@ nnoremap <C-j> :tabprevious<CR>
 nnoremap <C-k> :tabnext<CR>
 nnoremap <Enter> o<ESC>
 
-"status line
-let s:hidden_all = 0
-function! ToggleHidden()
-    if s:hidden_all  == 0
-        let s:hidden_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
-    else
-        let s:hidden_all = 0
-        set showmode
-        set ruler
-        set laststatus=2
-        set showcmd
-    endif
-endfunction
-call ToggleHidden()
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction

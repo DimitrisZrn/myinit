@@ -4,6 +4,8 @@ Plug 'flazz/vim-colorschemes'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+
+Plug 'stevearc/vim-arduino'
 call plug#end()
 
 set nocompatible
@@ -12,7 +14,7 @@ syntax enable
 set shortmess+=c
 set nobackup
 set nowritebackup
-set updatetime=300
+set updatetime=200
 set number
 set signcolumn=no
 set background=dark
@@ -25,7 +27,10 @@ set noswapfile
 set mouse=a
 set autoindent
 set splitright
-colorscheme molokai
+set termguicolors
+hi Normal guibg=NONE ctermbg=NONE
+colorscheme ayu
+"highlight Normal ctermbg=NONE
 
 nnoremap - $
 vnoremap - $
@@ -39,8 +44,6 @@ inoremap {, {<CR>} <C-c>O
 inoremap {; {}<left>
 inoremap [, [<CR>] <C-c>O
 inoremap [; []<left>
-inoremap "; ""<left>
-inoremap '; ''<left>
 nnoremap <C-j> :tabprevious<CR>                                             
 nnoremap <C-k> :tabnext<CR>
 nnoremap <Enter> o<ESC>
